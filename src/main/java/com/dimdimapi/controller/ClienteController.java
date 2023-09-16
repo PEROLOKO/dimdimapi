@@ -51,9 +51,11 @@ public class ClienteController {
 
     @PutMapping("{id}")
     public ResponseEntity<Cliente> update(@PathVariable Long id, @RequestBody Cliente cliente) {
-        repository.findById(id)
+        var clienteEncontrado = repository.findById(id)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não Encontrado"));
         cliente.setId(id);
+        cliente.setMovimentacoesFez(clienteEncontrado.getMovimentacoesFez());
+        cliente.setMovimentacoesRecebe(clienteEncontrado.getMovimentacoesRecebe());
         repository.save(cliente);
         return ResponseEntity.ok(cliente);
     }
