@@ -53,4 +53,18 @@ public class MovimentacaoController {
         return ResponseEntity.ok(movimentacao);
     }
 
+    @GetMapping("fez/{idCliente}")
+    public List<Movimentacao> listarClienteFez(@PathVariable Long idCliente) {
+        var cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não Encontrado"));
+        return movimentacaoRepository.findByClienteFez(cliente);
+    }
+
+    @GetMapping("recebeu/{idCliente}")
+    public List<Movimentacao> listarClienteRecebeu(@PathVariable Long idCliente) {
+        var cliente = clienteRepository.findById(idCliente)
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não Encontrado"));
+        return movimentacaoRepository.findByClienteRecebe(cliente);
+    }
+
 }
