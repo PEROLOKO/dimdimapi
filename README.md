@@ -1,6 +1,44 @@
 # DimDim API
  API de movimentações bancárias para a DimDim
 
+[Vídeo Tutorial](https://youtu.be/1AFM3SSkM-k)
+
+## Integrantes
+ - Enzo Perazolo RM95657
+ - Giovanna Sousa RM94767
+ - Henry Kinoshita RM93443
+ - Matheus Felipe RM93772
+
+## Configurações e Executando
+1. Clone esse Repositório
+2. Crie um Repositório **público** no Docker Hub com o nome **dimdimapi**
+3. Na pasta raiz do projeto execute o comando abaixo no terminal para gerar um JAR executável:
+
+```
+mvn clean package
+```
+
+4. Execute esses comandos para criar a imagem do docker e linkar ele com o repositório que você criou (substitua username pelo seu nome no Docker Hub)
+
+```
+docker build -t dimdimapi .
+
+docker login -u [username]
+
+docker tag dimdimapi [username]/dimdimapi
+
+docker push [username]/dimdimapi
+```
+
+5. Com a imagem e o repositório no docker feitos, no Azure vamos colocar o container rodando em nuvem
+6. No portal crie uma nova Instância de Container
+7. Crie um novo grupo de recursos `rg-dimdimapi`
+8. Coloque o nome da instância como `aci-dimdimapi`
+9. Na origem da imagem coloque **Outro registro**
+10. Na imagem coloque o repositório que você criou no docker
+11. Por fim, abra a porta `8080 TCP` na aba de redes, clique Revisar & Criar em seguida Criar
+12. Para testar a API na visão geral pegue o IP e faça requisições na porta 8080 com os endpoints a seguir
+
 ## Endpoints
  - Cliente
    - [Cadastrar Cliente](#cadastrar-cliente)
